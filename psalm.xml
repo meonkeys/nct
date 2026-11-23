@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+SPDX-FileCopyrightText: 2026 Adam Monsen <haircut@gmail.com>
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+<psalm errorLevel="4" resolveFromConfigFile="true">
+	<projectFiles>
+		<directory name="lib" />
+		<directory name="tests" />
+		<ignoreFiles>
+			<directory name="composer" />
+		</ignoreFiles>
+	</projectFiles>
+	<stubs>
+		<!-- nextcloud/ocp has no autoload mapping of its own: it's a stub-only
+		     package meant for static analysis, not real class loading. -->
+		<directory name="composer/nextcloud/ocp/OCP" />
+	</stubs>
+	<issueHandlers>
+		<!-- Nextcloud wires services up by constructor type-hint via its DI
+		     container; there's never a literal `new X()` for them, so Psalm's
+		     dead-code analysis can't see that they're used at all. -->
+		<UnusedClass errorLevel="suppress" />
+		<UnusedMethod errorLevel="suppress" />
+		<UnusedProperty errorLevel="suppress" />
+		<PossiblyUnusedMethod errorLevel="suppress" />
+		<PossiblyUnusedProperty errorLevel="suppress" />
+		<InvalidDocblock>
+			<errorLevel type="suppress">
+				<!-- Upstream bug in the nextcloud/ocp stub package, not our code. -->
+				<directory name="composer" />
+			</errorLevel>
+		</InvalidDocblock>
+	</issueHandlers>
+</psalm>

@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: 2026 Adam Monsen <haircut@gmail.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+services:
+  nextcloud:
+    image: nextcloud:34
+    ports:
+      - "8080:80"
+    environment:
+      SQLITE_DATABASE: nextcloud
+      NEXTCLOUD_ADMIN_USER: admin
+      NEXTCLOUD_ADMIN_PASSWORD: admin
+    volumes:
+      - nextcloud:/var/www/html
+      - ./:/var/www/html/custom_apps/nct
+
+  # Without this, background jobs (inbox sync) never run: Nextcloud's default
+  # "ajax" cron mode only fires opportunistically from browser page loads,
+  # which doesn't happen reliably in a dev stack driven mostly by occ/curl.
+  # /cron.sh is the official image's built-in busybox-crond wrapper, running
+  # cron.php every 5 minutes against the same install.
+  cron:
+    image: nextcloud:34
+    entrypoint: /cron.sh
+    volumes:
+      - nextcloud:/var/www/html
+      - ./:/var/www/html/custom_apps/nct
+    depends_on:
+      - nextcloud
+
+volumes:
+  nextcloud:
