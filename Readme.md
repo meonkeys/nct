@@ -108,7 +108,7 @@ Copyright ©2026 [Adam Monsen](https://adammonsen.com)
 
 License: AGPL v3 or later (see COPYING).
 
-## Resources
+## Other stuff to check out / ideas
 
 - Related work
     - https://apps.nextcloud.com/apps/sms_relentless - requires an SMS/MMS enabled phone number acquired from Telnyx, Plivo, Twilio
@@ -121,3 +121,4 @@ License: AGPL v3 or later (see COPYING).
 - [patch: SMSGate without Firebase Cloud Messaging](https://github.com/capcom6/android-sms-gateway/pull/481) (WIP as of 2026-11-18)
 - [issue: get SMSGate on F-Droid](https://github.com/capcom6/android-sms-gateway/issues/165) (WIP as of 2026-11-18)
 - if you just want to be able to write text messages with a keyboard, consider pairing a bluetooth keyboard with your phone
+- Instead of having its own UI, maybe this app should instead integrate with Nextcloud Talk. It could add a new chat for every SMS/MMS conversation.
